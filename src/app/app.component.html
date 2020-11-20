@@ -1,0 +1,89 @@
+<form class="formContainer" [formGroup]="form">
+  <div class="form-group row">
+    <label for="course" class="col-4 col-form-label"><h1 class="title">Course</h1></label> 
+    <div class="col-8">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <i class="fa fa-graduation-cap"></i>
+          </div>
+        </div> 
+        <input id="course" name="course" formControlName="courseName" placeholder="ex. Computer Science" type="text" class="form-control"> 
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-4"><h2 class="title">Target Grade</h2></label> 
+    <div class="col-8">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input name="targetGrade" id="targetGrade_0" formControlName="targetGrade" type="radio" required="required" class="custom-control-input" value="first"> 
+        <label for="targetGrade_0" class="custom-control-label">1st</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input name="targetGrade" id="targetGrade_1" formControlName="targetGrade" type="radio" required="required" class="custom-control-input" value="twoOne"> 
+        <label for="targetGrade_1" class="custom-control-label">2:1</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input name="targetGrade" id="targetGrade_2" formControlName="targetGrade" type="radio" required="required" class="custom-control-input" value="twoTwo"> 
+        <label for="targetGrade_2" class="custom-control-label">2:2</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input name="targetGrade" id="targetGrade_3" formControlName="targetGrade" type="radio" required="required" class="custom-control-input" value="third"> 
+        <label for="targetGrade_3" class="custom-control-label">3</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-4"><h2 class="title">Year</h2></label> 
+    <div class="col-8">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input name="year" id="year_0" formControlName="year" type="radio" class="custom-control-input" value="firstYear" required="required"> 
+        <label for="year_0" class="custom-control-label">1st</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input name="year" id="year_1" formControlName="year" type="radio" class="custom-control-input" value="secondYear" required="required"> 
+        <label for="year_1" class="custom-control-label">2nd</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input name="year" id="year_2" formControlName="year" type="radio" class="custom-control-input" value="finalYear" required="required"> 
+        <label for="year_2" class="custom-control-label">Final</label>
+      </div>
+    </div>
+  </div>
+
+	<!-- Modules -->
+	<div formArrayName="modules">
+		<div *ngFor="let module of form['controls'].modules['controls']; let ix=index">
+			<div formGroupName="{{ix}}" class="modules">
+				<input type="text" formControlName="module">
+				<p>{{ formErrors.modules[ix].module }}</p>
+				<!-- Assignments -->
+				<div formArrayName="assessments">
+					<div *ngFor="let assess of module['controls'].assessments['controls']; let iy=index">
+						<div formGroupName="{{iy}}" class="assessments">
+							<input type="text" formControlName="A1">
+							<p> {{ formErrors.modules[ix].assessments[iy].A1 }}</p>
+							<input type="text" formControlName="A2">
+							<p>{{ formErrors.modules[ix].assessments[iy].A2 }}</p>
+							<!-- Z -->
+							<div formArrayName="Zs">
+								<div *ngFor="let Z of assess['controls'].Zs['controls']; let iz=index">
+									<div formGroupName="{{iz}}" class="Zs">
+										<input type="text" formControlName="Z">
+										<p>{{ formErrors.modules[ix].assessments[iy].Zs[iz].Z }}</p>
+									</div>
+								</div>
+								<input type="button" (click)="addGrade(ix,iy)" value="Add Grade">
+							</div>
+							<!-- Z End -->
+						</div>
+					</div>
+					<input type="button" (click)="addAssess(ix)" value="Add Assessment">
+				</div>
+				<!-- Assignments End-->
+			</div>
+		</div>
+		<input type="button" (click)="addModule()" value="Add Module">
+	</div>
+	<!-- Modules End -->
+<form>
